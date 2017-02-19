@@ -8,15 +8,20 @@
 #include "Finger.h"
 
 
-Finger::Finger(int pin)
+Finger::Finger(int pin, bool isLeftHand)
 { 
-  //_flexSensorPin = pin; //analog pin 0
-  //static char const flexSensorPin[] = pin;
   _pin = pin;
+  _isLeftHand = isLeftHand;
   _readyForKeyUp = false;
   _readyForKeyDown = true;
   _triggerInterval = 4;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
+  if (_isLeftHand) {
+    _fingerNumber = _pin + 4;
+  }
+  else {
+    _fingerNumber = _pin + 1;
+  }
   strcpy( _alphabet, alphabet );
 }
 

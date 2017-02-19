@@ -12,7 +12,7 @@
 class Finger
 {
   public:
-    Finger(int pin);
+    Finger(int pin, bool isLeftHand);
     int setLargestAngle(int currentPos);
     int setSmallestAngle(int currentPos);
     int checkForKeyDown(int currentPos);
@@ -29,6 +29,8 @@ class Finger
     boolean _readyForKeyUp;
   	boolean _readyForKeyDown;
   	int _triggerInterval;
+    boolean _isLeftHand;
+    int _fingerNumber;
 };
 
 #endif
