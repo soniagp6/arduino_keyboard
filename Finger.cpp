@@ -8,30 +8,39 @@
 #include "Finger.h"
 
 
-Finger::Finger(int pin, bool isLeftHand)
+Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
 { 
   _pin = pin;
   _isLeftHand = isLeftHand;
   _readyForKeyUp = false;
   _readyForKeyDown = true;
   _triggerInterval = 1;
+  _lowerLimit = lowerLimit;
+  _upperLimit = upperLimit;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
   if (_isLeftHand) {
-    _fingerNumber = _pin + 1;
+    _fingerNumber = _pin - 1;
   }
   else {
-    _fingerNumber = _pin + 4;
+    _fingerNumber = _pin + 3;
   }
   strcpy( _alphabet, alphabet );
+
 }
 
 void Finger::onLoop()
 {
   // Keyboard.print(analogRead(_pin));
   // Keyboard.print("\n");
+
+
   // this is if we are writing different characters with each finger
-  //int currentPosition = map(analogRead(_pin), 380, 680, (26/8) * _fingerNumber, (26/8) * _fingerNumber - 4);
-  int currentPosition = map(analogRead(_pin), 680, 380, 0, 25);
+  int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit + 150, (26/8) * _fingerNumber, (26/8) * _fingerNumber + 4);
+  // this is if we are writing all the characters on each finger
+  //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
+
+  // Keyboard.print(_alphabet[currentPosition]);
+  // Keyboard.print("\n");
   setLargestAngle(currentPosition);
   setSmallestAngle(currentPosition);
   if (_readyForKeyDown) {
@@ -62,14 +71,13 @@ int Finger::checkForKeyDown(int currentPos) {
 
 int Finger::checkForKeyUp(int currentPos) {
   if (currentPos <= _largestAngle - _triggerInterval) {
-    sendKey(currentPos);
+    sendKey(_largestAngle);
     reset(currentPos);
   }
 }
 
-void Finger::sendKey(int currentPos) {
-
-  Keyboard.print(_alphabet[currentPos]);
+void Finger::sendKey(int largestAngle) {
+  Keyboard.print(_alphabet[largestAngle]);
   Keyboard.print("\n");
 }
 
