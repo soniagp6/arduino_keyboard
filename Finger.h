@@ -9,6 +9,17 @@
 #include "Arduino.h"
 #include "Keyboard.h"
 
+#include <SPI.h>
+#include "Adafruit_BLE.h"
+#include "Adafruit_BluefruitLE_SPI.h"
+#include "Adafruit_BluefruitLE_UART.h"
+
+#include "BluefruitConfig.h"
+
+#if SOFTWARE_SERIAL_AVAILABLE
+  #include <SoftwareSerial.h>
+#endif
+
 class Finger
 {
   public:
@@ -20,6 +31,7 @@ class Finger
     void sendKey(int currentPos);
     void reset(int currentPos);
     void onLoop();
+    void error();
 
   private:
     char _alphabet[100];
