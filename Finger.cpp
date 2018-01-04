@@ -4,7 +4,6 @@
 */
 
 #include "Arduino.h"
-
 #include "Keyboard.h"
 #include "Finger.h"
 

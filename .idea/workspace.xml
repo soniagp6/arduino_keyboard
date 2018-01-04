@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="84964527-628a-474e-9eaa-53d2057bf55a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/Finger.cpp" afterPath="$PROJECT_DIR$/Finger.cpp" />
-      <change beforePath="$PROJECT_DIR$/Finger.h" afterPath="$PROJECT_DIR$/Finger.h" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,8 +29,8 @@
       <file leaf-file-name="Finger.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Finger.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="81" column="23" lean-forward="false" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
+            <state relative-caret-position="75">
+              <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -136,7 +135,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6051000" />
+    <option name="totallyTimeSpent" value="6246000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -404,8 +403,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Finger.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="81" column="23" lean-forward="false" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
+        <state relative-caret-position="75">
+          <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
           <folding />
         </state>
       </provider>
