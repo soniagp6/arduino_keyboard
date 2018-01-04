@@ -5,22 +5,8 @@
 
 #include "Arduino.h"
 
-#include <SPI.h>
-#include "Adafruit_BLE.h"
-#include "Adafruit_BluefruitLE_SPI.h"
-#include "Adafruit_BluefruitLE_UART.h"
-
-#include "BluefruitConfig.h"
-
 #include "Keyboard.h"
 #include "Finger.h"
-
-
-#define FACTORYRESET_ENABLE         0
-#define MINIMUM_FIRMWARE_VERSION    "0.6.6"
-
-/* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
-Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 
 
 Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
@@ -40,19 +26,6 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
     _fingerNumber = _pin + 3;
   }
   strcpy( _alphabet, alphabet );
-
-  /* Enable HID Service */
-    if ( ble.isVersionAtLeast(MINIMUM_FIRMWARE_VERSION) )
-    {
-      if ( !ble.sendCommandCheckOK(F( "AT+BleHIDEn=On" ))) {
-
-      }
-      }else
-      {
-      if (! ble.sendCommandCheckOK(F( "AT+BleKeyboardEn=On"  ))) {
-      }
-    }
-
 
 }
 
@@ -107,7 +80,6 @@ int Finger::checkForKeyUp(int currentPos) {
 void Finger::sendKey(int largestAngle) {
   Keyboard.print(_alphabet[largestAngle]);
   Keyboard.print("\n");
-  ble.print("BLE is set up");
 }
 
 void Finger::reset(int currentPos) {
