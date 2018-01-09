@@ -27,7 +27,6 @@ class Finger
     int checkForKeyUp(int currentPos);
     void sendKey(int currentPos);
     void reset(int currentPos);
-    void begin();
     void onLoop();
 
   private:

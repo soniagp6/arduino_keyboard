@@ -43,13 +43,6 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafrui
 void Finger::onLoop()
 {
 
-    while (!Serial);  // required for Flora & Micro
-           delay(500);
-           Serial.begin(115200);
-           Serial.println(F("Adafruit Bluefruit HID Keyboard Example"));
-           Serial.println(F("---------------------------------------"));
-       delay(2000);
-
   // Keyboard.print(analogRead(_pin));
   // Keyboard.print("\n");
 
@@ -100,8 +93,7 @@ int Finger::checkForKeyUp(int currentPos) {
 void Finger::sendKey(int largestAngle) {
   //Keyboard.print(_alphabet[largestAngle]);
   //Keyboard.print("\n");
-  Serial.println("send key triggered");
-  bluetoothle->println("send key triggered bluetooth");
+  bluetoothle->print("send key triggered bluetooth");
 }
 
 void Finger::reset(int currentPos) {
@@ -111,12 +103,3 @@ void Finger::reset(int currentPos) {
   _readyForKeyDown = true;
 }
 
-// A small helper
-void Finger::error(const __FlashStringHelper*err) {
-  Serial.println(err);
-  while (1);
-}
-
-void Finger::begin(){
-  bluetoothle->begin(true);
-}
