@@ -45,7 +45,6 @@ void Finger::onLoop()
 
     while (!Serial);  // required for Flora & Micro
            delay(500);
-
            Serial.begin(115200);
            Serial.println(F("Adafruit Bluefruit HID Keyboard Example"));
            Serial.println(F("---------------------------------------"));
