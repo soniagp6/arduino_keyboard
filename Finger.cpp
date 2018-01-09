@@ -4,11 +4,21 @@
 */
 
 #include "Arduino.h"
-#include "Keyboard.h"
+
+#include <SPI.h>
+#include "Adafruit_BLE.h"
+#include "Adafruit_BluefruitLE_SPI.h"
+#include "Adafruit_BluefruitLE_UART.h"
+
+#include "BluefruitConfig.h"
+
+
+
+//#include "Keyboard.h"
 #include "Finger.h"
 
 
-Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
+Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
 { 
   _pin = pin;
   _isLeftHand = isLeftHand;
@@ -17,6 +27,7 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
   _triggerInterval = 1;
   _lowerLimit = lowerLimit;
   _upperLimit = upperLimit;
+  bluetoothle = ble;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
   if (_isLeftHand) {
     _fingerNumber = _pin - 1;
@@ -25,11 +36,21 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
     _fingerNumber = _pin + 3;
   }
   strcpy( _alphabet, alphabet );
-
 }
+
+
 
 void Finger::onLoop()
 {
+
+    while (!Serial);  // required for Flora & Micro
+           delay(500);
+
+           Serial.begin(115200);
+           Serial.println(F("Adafruit Bluefruit HID Keyboard Example"));
+           Serial.println(F("---------------------------------------"));
+       delay(2000);
+
   // Keyboard.print(analogRead(_pin));
   // Keyboard.print("\n");
 
@@ -72,13 +93,16 @@ int Finger::checkForKeyDown(int currentPos) {
 int Finger::checkForKeyUp(int currentPos) {
   if (currentPos <= _largestAngle - _triggerInterval) {
     sendKey(_largestAngle);
+    Serial.println("key sent");
     reset(currentPos);
   }
 }
 
 void Finger::sendKey(int largestAngle) {
-  Keyboard.print(_alphabet[largestAngle]);
-  Keyboard.print("\n");
+  //Keyboard.print(_alphabet[largestAngle]);
+  //Keyboard.print("\n");
+  Serial.println("send key triggered");
+  bluetoothle->println("send key triggered bluetooth");
 }
 
 void Finger::reset(int currentPos) {
@@ -86,4 +110,14 @@ void Finger::reset(int currentPos) {
   _largestAngle = currentPos;
   _smallestAngle = currentPos;
   _readyForKeyDown = true;
+}
+
+// A small helper
+void Finger::error(const __FlashStringHelper*err) {
+  Serial.println(err);
+  while (1);
+}
+
+void Finger::begin(){
+  bluetoothle->begin(true);
 }
