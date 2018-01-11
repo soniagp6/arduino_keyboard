@@ -38,6 +38,7 @@ class Finger
   	boolean _readyForKeyDown;
   	int _triggerInterval;
     boolean _isLeftHand;
+    boolean _ranSetup;
     int _fingerNumber;
     int _lowerLimit;
     int _upperLimit;

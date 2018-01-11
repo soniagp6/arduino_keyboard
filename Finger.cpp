@@ -27,6 +27,7 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafrui
   _triggerInterval = 1;
   _lowerLimit = lowerLimit;
   _upperLimit = upperLimit;
+  _ranSetup = false;
   bluetoothle = ble;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
   if (_isLeftHand) {
@@ -62,6 +63,40 @@ void Finger::onLoop()
   if (_readyForKeyUp) {
     checkForKeyUp(currentPosition);
   }
+
+  // Display prompt
+    Serial.print(F("keyboard > "));
+
+    // Check for user input and echo it back if anything was found
+    char keys[BUFSIZE+1];
+
+    memset(keys, 0, BUFSIZE);
+        while( Serial.available() == 0 ) {
+          delay(1);
+        }
+
+        uint8_t count=0;
+
+        do
+        {
+          count += Serial.readBytes(keys+count, BUFSIZE);
+          delay(2);
+        } while( (count < BUFSIZE) && !(Serial.available() == 0) );
+
+    Serial.print("\nSending ");
+    Serial.println(keys);
+
+    bluetoothle->print("AT+BleKeyboard=");
+    bluetoothle->println(keys);
+
+    if( bluetoothle->waitForOK() )
+    {
+      Serial.println( F("OK!") );
+    }else
+    {
+      Serial.println( F("FAILED!") );
+    }
+
 }
 
 int Finger::setLargestAngle(int currentPos)
@@ -102,4 +137,5 @@ void Finger::reset(int currentPos) {
   _smallestAngle = currentPos;
   _readyForKeyDown = true;
 }
+
 
