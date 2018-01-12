@@ -63,40 +63,6 @@ void Finger::onLoop()
   if (_readyForKeyUp) {
     checkForKeyUp(currentPosition);
   }
-
-  // Display prompt
-    Serial.print(F("keyboard > "));
-
-    // Check for user input and echo it back if anything was found
-    char keys[BUFSIZE+1];
-
-    memset(keys, 0, BUFSIZE);
-        while( Serial.available() == 0 ) {
-          delay(1);
-        }
-
-        uint8_t count=0;
-
-        do
-        {
-          count += Serial.readBytes(keys+count, BUFSIZE);
-          delay(2);
-        } while( (count < BUFSIZE) && !(Serial.available() == 0) );
-
-    Serial.print("\nSending ");
-    Serial.println(keys);
-
-    bluetoothle->print("AT+BleKeyboard=");
-    bluetoothle->println(keys);
-
-    if( bluetoothle->waitForOK() )
-    {
-      Serial.println( F("OK!") );
-    }else
-    {
-      Serial.println( F("FAILED!") );
-    }
-
 }
 
 int Finger::setLargestAngle(int currentPos)
@@ -120,7 +86,6 @@ int Finger::checkForKeyDown(int currentPos) {
 int Finger::checkForKeyUp(int currentPos) {
   if (currentPos <= _largestAngle - _triggerInterval) {
     sendKey(_largestAngle);
-    Serial.println("key sent");
     reset(currentPos);
   }
 }
@@ -128,7 +93,11 @@ int Finger::checkForKeyUp(int currentPos) {
 void Finger::sendKey(int largestAngle) {
   //Keyboard.print(_alphabet[largestAngle]);
   //Keyboard.print("\n");
-  bluetoothle->print("send key triggered bluetooth");
+  //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
+  //the following information should be transmitted as output from a BLE keyboard
+  Serial.println("key sent");
+  bluetoothle->print("AT+BleKeyboard=");
+  bluetoothle->println(_alphabet[largestAngle]);
 }
 
 void Finger::reset(int currentPos) {
