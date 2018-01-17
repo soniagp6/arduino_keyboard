@@ -12,9 +12,6 @@
 
 #include "BluefruitConfig.h"
 
-
-
-//#include "Keyboard.h"
 #include "Finger.h"
 
 
@@ -44,17 +41,12 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafrui
 void Finger::onLoop()
 {
 
-  // Keyboard.print(analogRead(_pin));
-  // Keyboard.print("\n");
-
 
   // this is if we are writing different characters with each finger
   int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit + 150, (26/8) * _fingerNumber, (26/8) * _fingerNumber + 4);
   // this is if we are writing all the characters on each finger
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
 
-  // Keyboard.print(_alphabet[currentPosition]);
-  // Keyboard.print("\n");
   setLargestAngle(currentPosition);
   setSmallestAngle(currentPosition);
   if (_readyForKeyDown) {
@@ -91,11 +83,8 @@ int Finger::checkForKeyUp(int currentPos) {
 }
 
 void Finger::sendKey(int largestAngle) {
-  //Keyboard.print(_alphabet[largestAngle]);
-  //Keyboard.print("\n");
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
   //the following information should be transmitted as output from a BLE keyboard
-  Serial.println("key sent");
   bluetoothle->print("AT+BleKeyboard=");
   bluetoothle->println(_alphabet[largestAngle]);
 }
