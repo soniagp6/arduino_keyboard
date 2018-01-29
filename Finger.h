@@ -20,7 +20,7 @@
 class Finger
 {
   public:
-    Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble);
+    Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble);
     int setLargestAngle(int currentPos);
     int setSmallestAngle(int currentPos);
     int checkForKeyDown(int currentPos);

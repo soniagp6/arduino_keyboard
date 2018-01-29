@@ -15,8 +15,9 @@
 #include "Finger.h"
 
 
-Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
-{ 
+Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
+{
+  _fingerNumber = fingerNumber;
   _pin = pin;
   _isLeftHand = isLeftHand;
   _readyForKeyUp = false;
@@ -27,12 +28,6 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafrui
   _ranSetup = false;
   bluetoothle = ble;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
-  if (_isLeftHand) {
-    _fingerNumber = _pin - 1;
-  }
-  else {
-    _fingerNumber = _pin + 3;
-  }
   strcpy( _alphabet, alphabet );
 }
 
@@ -40,10 +35,8 @@ Finger::Finger(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafrui
 
 void Finger::onLoop()
 {
-
-
   // this is if we are writing different characters with each finger
-  int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit + 150, (26/8) * _fingerNumber, (26/8) * _fingerNumber + 4);
+  int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, (26/8) * (_fingerNumber - 1), (26/8) * _fingerNumber + 3);
   // this is if we are writing all the characters on each finger
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
 
@@ -55,6 +48,11 @@ void Finger::onLoop()
   if (_readyForKeyUp) {
     checkForKeyUp(currentPosition);
   }
+  Serial.print("finger ");
+  Serial.println(_fingerNumber);
+  Serial.print("current Position ");
+  Serial.println(currentPosition);
+  Serial.println(analogRead(_pin));
 }
 
 int Finger::setLargestAngle(int currentPos)

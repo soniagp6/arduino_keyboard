@@ -4,6 +4,7 @@
     <list default="true" id="84964527-628a-474e-9eaa-53d2057bf55a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Finger.cpp" afterPath="$PROJECT_DIR$/Finger.cpp" />
+      <change beforePath="$PROJECT_DIR$/Finger.h" afterPath="$PROJECT_DIR$/Finger.h" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,8 +21,8 @@
       <file leaf-file-name="Finger.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Finger.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="43" lean-forward="false" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+            <state relative-caret-position="405">
+              <caret line="27" column="20" lean-forward="false" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -30,8 +31,8 @@
       <file leaf-file-name="Finger.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Finger.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+            <state relative-caret-position="568">
+              <caret line="49" column="3" lean-forward="true" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -54,6 +55,7 @@
       <find>!</find>
       <find>char</find>
       <find>checkForKeyDown</find>
+      <find>fingernum</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -73,11 +75,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="213" />
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1513" />
-    <option name="height" value="1341" />
+    <option name="width" value="1388" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -95,7 +96,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -107,6 +107,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -141,15 +142,16 @@
       <updated>1513625991846</updated>
       <workItem from="1513625995276" duration="4322000" />
       <workItem from="1513783521304" duration="1579000" />
-      <workItem from="1516220699716" duration="612000" />
+      <workItem from="1516220699716" duration="2658000" />
+      <workItem from="1517171124601" duration="3788000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47490000" />
+    <option name="totallyTimeSpent" value="53324000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1388" height="877" extended-state="6" />
+    <frame x="0" y="23" width="1388" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2723343" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
@@ -182,6 +184,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Finger.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="45" column="43" lean-forward="false" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Finger.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="57" column="32" lean-forward="false" selection-start-line="57" selection-start-column="32" selection-end-line="57" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Finger.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -412,16 +430,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Finger.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" column="43" lean-forward="false" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+        <state relative-caret-position="405">
+          <caret line="27" column="20" lean-forward="false" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Finger.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+        <state relative-caret-position="568">
+          <caret line="49" column="3" lean-forward="true" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
           <folding />
         </state>
       </provider>

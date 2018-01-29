@@ -19,18 +19,22 @@ int buttonState = 0;
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
 Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 
+//Left Thumb
+Finger finger0(0, 0, true, 460, 300, &ble);
+//Left Index
+Finger finger4(4, 1, true, 610, 480, &ble);
+//Left Middle
+Finger finger3(3, 2, true, 660, 540, &ble);
+//Left Ring
+Finger finger2(2, 3, true, 540, 470, &ble);
+//Left Pinky
+Finger finger1(1, 4, true, 500, 425, &ble);
 
-//Finger finger0(5, true);
-//Finger finger1(4, true, 0, 0, &ble);
-//Finger finger2(3, true, 650, 350, &ble);
-//Finger finger3(2, true, 670, 460, &ble);
-//Finger finger4(1, true, 600, 380, &ble);
-
-//Finger finger0(5, false, 0, 0, &ble);
-//Finger finger1(4, false, 490, 150, &ble);
-//Finger finger2(3, false, 650, 350, &ble);
-Finger finger3(2, false, 600, 320, &ble);
-Finger finger4(1, false, 680, 410, &ble);
+//Finger finger0(4, false, 0, 0, &ble);
+//Finger finger1(3, false, 490, 150, &ble);
+//Finger finger2(2, false, 650, 350, &ble);
+//Finger finger3(1, false, 600, 320, &ble);
+//Finger finger4(0, false, 680, 410, &ble);
 
 #define VERBOSE_MODE  false
 
@@ -45,8 +49,8 @@ void setup(void)
 //  Serial.begin(115200);
 //  Serial.println(F("Adafruit Bluefruit HID Keyboard Example"));
 //  Serial.println(F("---------------------------------------"));
-
-  /* Initialise the module */
+//
+//  /* Initialise the module */
 //  Serial.print(F("Initialising the Bluefruit LE module: "));
 
   if ( !ble.begin(VERBOSE_MODE) )
@@ -58,10 +62,10 @@ void setup(void)
   if ( FACTORYRESET_ENABLE )
   {
     /* Perform a factory reset to make sure everything is in a known state */
-    //Serial.println(F("Performing a factory reset: "));
+//  Serial.println(F("Performing a factory reset: "));
     if ( ! ble.factoryReset() ){
-      //error(F("Couldn't factory reset"));
-    }
+//      error(F("Couldn't factory reset"));
+    } 
   }
   
   /* Disable command echo from Bluefruit */
@@ -74,7 +78,7 @@ void setup(void)
   /* Change the device name to make it easier to find */
   //Serial.println(F("Setting device name to 'Bluefruit Keyboard': "));
   if (! ble.sendCommandCheckOK(F( "AT+GAPDEVNAME=Bluefruit Keyboard" )) ) {
-    error(F("Could not set device name?"));
+    //error(F("Could not set device name?"));
   }
 
   /* Enable HID Service */
@@ -104,47 +108,23 @@ void loop() {
   checkOnButton();
  
   if (keyboardOn==true) {
-      //New sensor
-      
-      //finger0.onLoop();
 
-      //Pinky
-      //Left hand
-      //No response
-      //Right hand
-      //WXYZ
-      //Range 540 to 150
-      //finger1.onLoop();
+      //Left Pinky
+      finger1.onLoop(); 
 
-      //Ring
-      //Left hand
-      //Range 650 to 350
-      //GHIJ
-      //Right hand
-      //Range 650 to 350
-      //STUVW
+      //Left Ring
       //finger2.onLoop();
 
-      //Middle
-      //Left hand
-      //DEFG
-      //Range 670 to 460
-      //Right hand 
-      //Range 600 to 400
-      //RSTU
+      //Left Middle
       //finger3.onLoop();
+
+      //Left Index
+      //finger4.onLoop();
       
-      //Index
-      //Left hand 
-      //Range - 600 to 380
-      //ABCD
-      //Right hand 
-      //Range - 680 to 410
-      //NOPQ
-      finger4.onLoop();
+      //Left Thumb
+      //finger5.onLoop();
      
-      //Thumb
-      //finger5.onLoop();  
+       
   }
 }
 
