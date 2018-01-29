@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Finger.h>
+#include <Thumb.h>
 
 #include <SPI.h>
 #include "Adafruit_BLE.h"
@@ -20,15 +21,15 @@ int buttonState = 0;
 Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 
 //Left Thumb
-Finger finger0(0, 0, true, 460, 300, &ble);
+Thumb finger5(5, 0, true, 300, 230, &ble);
 //Left Index
-Finger finger4(4, 1, true, 610, 480, &ble);
+Finger finger4(4, 1, true, 610, 520, &ble);
 //Left Middle
-Finger finger3(3, 2, true, 660, 540, &ble);
+Finger finger3(3, 2, true, 630, 530, &ble);
 //Left Ring
-Finger finger2(2, 3, true, 540, 470, &ble);
+Finger finger2(2, 3, true, 500, 450, &ble);
 //Left Pinky
-Finger finger1(1, 4, true, 500, 425, &ble);
+Finger finger1(1, 4, true, 490, 450, &ble);
 
 //Finger finger0(4, false, 0, 0, &ble);
 //Finger finger1(3, false, 490, 150, &ble);
@@ -122,7 +123,7 @@ void loop() {
       //finger4.onLoop();
       
       //Left Thumb
-      //finger5.onLoop();
+      finger5.onLoop();
      
        
   }
