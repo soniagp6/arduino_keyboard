@@ -14,8 +14,6 @@
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
 
-#include "BluefruitConfig.h"
-
 
 class Finger
 {
