@@ -16,7 +16,6 @@
 
 Finger::Finger()
 {
-
 }
 
 Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
@@ -39,6 +38,9 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
 
 void Finger::onLoop()
 {
+  Serial.println("finger onloop");
+  bluetoothle->print("AT+BleKeyboard=");
+  bluetoothle->println("finger");
   // this is if we are writing different characters with each finger
   int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, (26/8) * (_fingerNumber - 1), (26/8) * (_fingerNumber));
   // this is if we are writing all the characters on each finger
