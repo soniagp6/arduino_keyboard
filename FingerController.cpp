@@ -25,7 +25,7 @@ void FingerController::createFingers()
 {
   Serial.println("Create Fingers");
   //Left Thumb
-  Finger finger5(5, 0, true, 300, 230, bluetoothle);
+  Finger finger5(5, 0, true, 300, 230, bluetoothle, *this);
 }
 
 void FingerController::onLoop()
@@ -33,10 +33,9 @@ void FingerController::onLoop()
   bluetoothle->print("AT+BleKeyboard=");
   bluetoothle->println("fingerController BT");
   //Left Thumb
-  finger5.onLoop();
+  //finger5.onLoop();
 }
 
 void FingerController::onKeyPress() {
   Serial.println("onKeyPress");
 }
-

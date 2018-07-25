@@ -7,6 +7,7 @@
 #define Finger_h
 
 #include "Arduino.h"
+
 //#include "Keyboard.h"
 
 #include <SPI.h>
@@ -14,11 +15,13 @@
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
 
+#include "FingerController.h"
+
 class Finger
 {
   public:
     Finger ();
-    Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble);
+    Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble, FingerController& parent);
     int setLargestAngle(int currentPos);
     int setSmallestAngle(int currentPos);
     int checkForKeyDown(int currentPos);

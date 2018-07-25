@@ -10,15 +10,14 @@
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
 
-
+#include "FingerController.h"
 #include "Finger.h"
-
 
 Finger::Finger()
 {
 }
 
-Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
+Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble, FingerController& parent)
 {
   _fingerNumber = fingerNumber;
   _pin = pin;
