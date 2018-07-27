@@ -12,14 +12,15 @@
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
 
-#include "FingerController.h"
 #include "Finger.h"
+
+extern void externFunc();
 
 Finger::Finger()
 {
 }
 
-Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble, FingerController &fc)
+Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
 {
   _fingerNumber = fingerNumber;
   _pin = pin;
@@ -33,7 +34,6 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   bluetoothle = ble;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
   strcpy( _alphabet, alphabet );
-  //fingerController = &fc;
 }
 
 
@@ -41,6 +41,7 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
 void Finger::onLoop()
 {
   Serial.println("finger onloop");
+  externFunc();
   bluetoothle->print("AT+BleKeyboard=");
   bluetoothle->println("finger");
   // this is if we are writing different characters with each finger
@@ -99,6 +100,10 @@ void Finger::reset(int currentPos) {
   _largestAngle = currentPos;
   _smallestAngle = currentPos;
   _readyForKeyDown = true;
+}
+
+void Finger::onExternFunc() {
+  Serial.println("onExternFunc");
 }
 
 

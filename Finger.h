@@ -15,15 +15,11 @@
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
 
-#include "FingerController.h"
-
-class FingerController;     // forward declaration
-
 class Finger
 {
   public:
     Finger ();
-    Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble, FingerController &fc);
+    Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble);
     int setLargestAngle(int currentPos);
     int setSmallestAngle(int currentPos);
     int checkForKeyDown(int currentPos);
@@ -31,6 +27,7 @@ class Finger
     void sendKey(int currentPos);
     void reset(int currentPos);
     void onLoop();
+    void onExternFunc();
 
   private:
     char _alphabet[100];
@@ -47,7 +44,6 @@ class Finger
     int _upperLimit;
     void error(const __FlashStringHelper*err);
     Adafruit_BluefruitLE_SPI * bluetoothle;
-    fingerController &fc;
 };
 
 #endif
