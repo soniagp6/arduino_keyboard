@@ -3,6 +3,8 @@
   Created by Sonia Putzel, Jan 10, 2017.
 */
 
+#include <stdio.h>
+
 #include "Arduino.h"
 
 #include <SPI.h>
@@ -17,7 +19,7 @@ Finger::Finger()
 {
 }
 
-Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble, FingerController& parent)
+Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble, FingerController &fc)
 {
   _fingerNumber = fingerNumber;
   _pin = pin;
@@ -31,6 +33,7 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   bluetoothle = ble;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
   strcpy( _alphabet, alphabet );
+  //fingerController = &fc;
 }
 
 

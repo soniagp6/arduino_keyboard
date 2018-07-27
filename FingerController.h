@@ -11,6 +11,8 @@
 
 #include <SPI.h>
 
+class Finger;     // forward declaration
+
 class FingerController
 {
   public:
