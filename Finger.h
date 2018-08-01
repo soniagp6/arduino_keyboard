@@ -28,6 +28,7 @@ class Finger
     void reset(int currentPos);
     void onLoop();
     void onExternFunc();
+    int currentLargestAngle();
 
   private:
     char _alphabet[100];

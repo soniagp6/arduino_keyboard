@@ -14,7 +14,7 @@
 
 #include "Finger.h"
 
-extern void externFunc();
+extern void testKeystroke();
 
 Finger::Finger()
 {
@@ -40,10 +40,6 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
 
 void Finger::onLoop()
 {
-  Serial.println("finger onloop");
-  externFunc();
-  bluetoothle->print("AT+BleKeyboard=");
-  bluetoothle->println("finger");
   // this is if we are writing different characters with each finger
   int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, (26/8) * (_fingerNumber - 1), (26/8) * (_fingerNumber));
   // this is if we are writing all the characters on each finger
@@ -80,6 +76,7 @@ int Finger::checkForKeyDown(int currentPos) {
 
 int Finger::checkForKeyUp(int currentPos) {
   if (currentPos <= _largestAngle - _triggerInterval) {
+    testKeystroke();
     sendKey(_largestAngle);
     reset(currentPos);
   }
@@ -100,6 +97,10 @@ void Finger::reset(int currentPos) {
   _largestAngle = currentPos;
   _smallestAngle = currentPos;
   _readyForKeyDown = true;
+}
+
+int Finger::currentLargestAngle() {
+  return _largestAngle;
 }
 
 void Finger::onExternFunc() {
