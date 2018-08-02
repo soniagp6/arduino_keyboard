@@ -20,14 +20,15 @@ class Finger
   public:
     Finger ();
     Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble);
-    int setLargestAngle(int currentPos);
-    int setSmallestAngle(int currentPos);
-    int checkForKeyDown(int currentPos);
-    int checkForKeyUp(int currentPos);
-    void sendKey(int currentPos);
-    void reset(int currentPos);
+    int setLargestAngle();
+    int setSmallestAngle();
+    int checkForKeyDown();
+    int checkForKeyUp();
+    int _fingerNumber;
+    int currentPosition;
+    void sendKey(int largestAngle);
+    void resetPos();
     void onLoop();
-    void onExternFunc();
     int currentLargestAngle();
 
   private:
@@ -40,7 +41,6 @@ class Finger
   	int _triggerInterval;
     boolean _isLeftHand;
     boolean _ranSetup;
-    int _fingerNumber;
     int _lowerLimit;
     int _upperLimit;
     void error(const __FlashStringHelper*err);

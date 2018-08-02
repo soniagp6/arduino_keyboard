@@ -14,7 +14,7 @@
 
 #include "Finger.h"
 
-extern void testKeystroke();
+extern void testKeystroke(Finger currentFinger);
 
 Finger::Finger()
 {
@@ -34,6 +34,7 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   bluetoothle = ble;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
   strcpy( _alphabet, alphabet );
+  int currentPosition;
 }
 
 
@@ -41,70 +42,61 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
 void Finger::onLoop()
 {
   // this is if we are writing different characters with each finger
-  int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, (26/8) * (_fingerNumber - 1), (26/8) * (_fingerNumber));
+  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, (26/8) * (_fingerNumber - 1), (26/8) * (_fingerNumber));
   // this is if we are writing all the characters on each finger
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
 
-  setLargestAngle(currentPosition);
-  setSmallestAngle(currentPosition);
+  setLargestAngle();
+  setSmallestAngle();
   if (_readyForKeyDown) {
-    checkForKeyDown(currentPosition);
+    checkForKeyDown();
   }
   if (_readyForKeyUp) {
-    checkForKeyUp(currentPosition);
+    checkForKeyUp();
   }
-    Serial.println(analogRead(_pin));
 }
 
-int Finger::setLargestAngle(int currentPos)
+int Finger::setLargestAngle()
 {
-  _largestAngle = (currentPos >= _largestAngle) ? currentPos : _largestAngle;
+  _largestAngle = (currentPosition >= _largestAngle) ? currentPosition : _largestAngle;
 }
 
-int Finger::setSmallestAngle(int currentPos)
+int Finger::setSmallestAngle()
 {
-  _smallestAngle = (currentPos <= _smallestAngle) ? currentPos : _smallestAngle;
+  _smallestAngle = (currentPosition <= _smallestAngle) ? currentPosition : _smallestAngle;
 }
 
-int Finger::checkForKeyDown(int currentPos) {
-  if (currentPos >= _smallestAngle + _triggerInterval) {
+int Finger::checkForKeyDown() {
+  if (currentPosition >= _smallestAngle + _triggerInterval) {
     _readyForKeyDown = false;
-    _largestAngle = currentPos;
+    _largestAngle = currentPosition;
     _readyForKeyUp = true;
   }
 }
 
-int Finger::checkForKeyUp(int currentPos) {
-  if (currentPos <= _largestAngle - _triggerInterval) {
-    testKeystroke();
-    sendKey(_largestAngle);
-    reset(currentPos);
+int Finger::checkForKeyUp() {
+  if (currentPosition <= _largestAngle - _triggerInterval) {
+    testKeystroke(*this);
+    resetPos();
   }
 }
 
 void Finger::sendKey(int largestAngle) {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
   //the following information should be transmitted as output from a BLE keyboard
-  Serial.print("finger ");
-  Serial.println(_fingerNumber);
-  Serial.println(largestAngle);
   bluetoothle->print("AT+BleKeyboard=");
   bluetoothle->println(_alphabet[largestAngle - 1]);
+  resetPos();
 }
 
-void Finger::reset(int currentPos) {
+void Finger::resetPos() {
   _readyForKeyUp = false;
-  _largestAngle = currentPos;
-  _smallestAngle = currentPos;
+  _largestAngle = currentPosition;
+  _smallestAngle = currentPosition;
   _readyForKeyDown = true;
 }
 
 int Finger::currentLargestAngle() {
   return _largestAngle;
 }
-
-void Finger::onExternFunc() {
-  Serial.println("onExternFunc");
-}
-
 

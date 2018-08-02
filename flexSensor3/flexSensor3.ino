@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <Finger.h>
-#include <FingerController.h>
 
 #include <SPI.h>
 #include "Adafruit_BLE.h"
@@ -12,6 +11,7 @@
 #define FACTORYRESET_ENABLE         0
 #define MINIMUM_FIRMWARE_VERSION    "0.6.6"
 
+
 bool keyboardOn = false;
 int ledPin = 13;
 int inputPin = 11;
@@ -20,18 +20,16 @@ int buttonState = 0;
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
 Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 
-FingerController fingerController(true);
-
 //Left Thumb
-//Finger finger5(5, 0, true, 300, 230, &ble);
+Finger finger5(5, 0, true, 300, 230, &ble);
 //Left Index
-//Finger finger4(4, 1, true, 610, 520, &ble);
+Finger finger4(4, 1, true, 610, 520, &ble);
 //Left Middle
-//Finger finger3(3, 2, true, 680, 595, &ble);
+Finger finger3(3, 2, true, 680, 595, &ble);
 //Left Ring
-//Finger finger2(2, 3, true, 680, 585, &ble);
+Finger finger2(2, 3, true, 680, 585, &ble);
 //Left Pinky
-//Finger finger1(1, 4, true, 385, 295, &ble);
+Finger finger1(1, 4, true, 385, 295, &ble);
 
 //Finger finger0(4, false, 0, 0, &ble);
 //Finger finger1(3, false, 490, 150, &ble);
@@ -104,32 +102,29 @@ void setup(void)
     //error(F("Couldn't reset??"));
   }
 
-  fingerController.createFingers();
 }
 
 void loop() {
-  delay(100); //just here to slow down the output for easier reading
+  delay(500); //just here to slow down the output for easier reading
 
   checkOnButton();
 
   if (keyboardOn==true) {
 
       //Left Pinky
-      //finger1.onLoop();
+      finger1.onLoop();
 
       //Left Ring
-      //finger2.onLoop();
+      finger2.onLoop();
 
       //Left Middle
-      //finger3.onLoop();
+      finger3.onLoop();
 
       //Left Index
-      //finger4.onLoop();
+      finger4.onLoop();
 
       //Left Thumb
-      //finger5.onLoop();
-
-     //fingerController.onLoop();
+      finger5.onLoop();
   }
 }
 
@@ -143,6 +138,28 @@ void checkOnButton() {
     keyboardOn = true;
   }
 }
+
+// Finger checks to see if the distance it has traveled is greater than another
+// finger's distance.
+void testKeystroke(Finger currentFinger) {
+  int fingerDist = currentFinger.currentLargestAngle();
+  // If distance traveled is greated than other fingers' distance
+  if (fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle()) {
+    currentFinger.sendKey(fingerDist);
+    //finger1.resetPos();
+    //finger2.resetPos();
+    //finger3.resetPos();
+    //finger4.resetPos();
+    //finger5.resetPos();
+  }
+  // Tell Finger to send keystroke
+  // Reset all fingers
+
+  // If another finger has traveled a greater distance
+  // Do nothing
+}
+
+
 
 // A small helper
 void error(const __FlashStringHelper*err) {
