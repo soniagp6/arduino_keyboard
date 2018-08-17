@@ -14,8 +14,6 @@
 
 #include "Thumb.h"
 
-extern void testKeystroke(Thumb currentThumb);
-
 Thumb::Thumb()
 {
 }
@@ -31,8 +29,8 @@ Thumb::Thumb(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_
   _upperLimit = upperLimit;
   _ranSetup = false;
   bluetoothle = ble;
-  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
-  strcpy( _alphabet, alphabet );
+  static char const punctuation[] = ".,?'   ";
+  strcpy( _punctuation, punctuation );
   int currentPosition;
 }
 
@@ -41,15 +39,15 @@ Thumb::Thumb(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_
 void Thumb::onLoop()
 {
   // this is if we are writing different characters with each finger
-  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 6);
-  // this is if we are writing all the characters on each finger
-  //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
-//  Serial.print("current finger: ");
-//  Serial.println(_fingerNumber);
-//  Serial.print("bend: ");
-//  Serial.println(analogRead(_pin));
-//  Serial.print("current position: ");
-//  Serial.println(currentPosition);
+  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 4);
+//  if (_isLeftHand) {
+//    Serial.print("Left ");
+//  }
+//  Serial.println("thumb");
+  Serial.print("bend: ");
+  Serial.println(analogRead(_pin));
+  Serial.print("current position: ");
+  Serial.println(currentPosition);
 
 
   setLargestAngle();
@@ -82,7 +80,7 @@ int Thumb::checkForKeyDown() {
 
 int Thumb::checkForKeyUp() {
   if (currentPosition <= _largestAngle - _triggerInterval) {
-    testKeystroke(*this);
+    sendKey(_largestAngle);
     resetPos();
   }
 }
@@ -94,8 +92,8 @@ void Thumb::sendKey(int largestAngle) {
   Serial.print("_relativePos ");
   Serial.println(_relativePos);
   bluetoothle->print("AT+BleKeyboard=");
-  bluetoothle->println(_alphabet[_relativePos]);
-  Serial.println(_alphabet[_relativePos]);
+  bluetoothle->println(_punctuation[_relativePos]);
+  Serial.println(_punctuation[_relativePos]);
   resetPos();
 }
 

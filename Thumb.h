@@ -31,7 +31,7 @@ class Thumb
     int currentLargestAngle();
 
   private:
-    char _alphabet[100];
+    char _punctuation[100];
     int _pin;
     int _largestAngle;
     int _smallestAngle;
