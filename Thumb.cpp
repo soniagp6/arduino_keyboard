@@ -84,7 +84,12 @@ int Thumb::checkForKeyUp() {
 void Thumb::sendKey(int largestAngle) {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
   //the following information should be transmitted as output from a BLE keyboard'
-  _relativePos =  largestAngle;
+  if (_isLeftHand) {
+    _relativePos =  largestAngle;
+  }
+  else {
+    _relativePos =  largestAngle + 3;
+  }
   Serial.print("_relativePos ");
   Serial.println(_relativePos);
   bluetoothle->print("AT+BleKeyboard=");
