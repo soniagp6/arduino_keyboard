@@ -3,6 +3,8 @@
   Created by Sonia Putzel, Jan 10, 2017.
 */
 
+#include <stdio.h>
+
 #include "Arduino.h"
 
 #include <SPI.h>
@@ -10,13 +12,16 @@
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
 
-
 #include "Thumb.h"
 
+extern void testKeystroke(Thumb currentThumb);
 
-Thumb::Thumb(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
+Thumb::Thumb()
 {
-  _fingerNumber = fingerNumber;
+}
+
+Thumb::Thumb(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble)
+{
   _pin = pin;
   _isLeftHand = isLeftHand;
   _readyForKeyUp = false;
@@ -26,8 +31,9 @@ Thumb::Thumb(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int low
   _upperLimit = upperLimit;
   _ranSetup = false;
   bluetoothle = ble;
-  static char const alphabet[] = " abcdefghijklmnopqrstuvwxyz";
+  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
   strcpy( _alphabet, alphabet );
+  int currentPosition;
 }
 
 
@@ -35,63 +41,72 @@ Thumb::Thumb(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int low
 void Thumb::onLoop()
 {
   // this is if we are writing different characters with each finger
-  int currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 1);
+  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 6);
   // this is if we are writing all the characters on each finger
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
+//  Serial.print("current finger: ");
+//  Serial.println(_fingerNumber);
+//  Serial.print("bend: ");
+//  Serial.println(analogRead(_pin));
+//  Serial.print("current position: ");
+//  Serial.println(currentPosition);
 
-  setLargestAngle(currentPosition);
-  setSmallestAngle(currentPosition);
+
+  setLargestAngle();
+  setSmallestAngle();
   if (_readyForKeyDown) {
-    checkForKeyDown(currentPosition);
+    checkForKeyDown();
   }
   if (_readyForKeyUp) {
-    checkForKeyUp(currentPosition);
+    checkForKeyUp();
   }
-  Serial.print("thumb ");
-  Serial.println(_fingerNumber);
-  Serial.print("current Position ");
-  Serial.println(currentPosition);
-  Serial.println(analogRead(_pin));
 }
 
-int Thumb::setLargestAngle(int currentPos)
+int Thumb::setLargestAngle()
 {
-  _largestAngle = (currentPos >= _largestAngle) ? currentPos : _largestAngle;
+  _largestAngle = (currentPosition >= _largestAngle) ? currentPosition : _largestAngle;
 }
 
-int Thumb::setSmallestAngle(int currentPos)
+int Thumb::setSmallestAngle()
 {
-  _smallestAngle = (currentPos <= _smallestAngle) ? currentPos : _smallestAngle;
+  _smallestAngle = (currentPosition <= _smallestAngle) ? currentPosition : _smallestAngle;
 }
 
-int Thumb::checkForKeyDown(int currentPos) {
-  if (currentPos >= _smallestAngle + _triggerInterval) {
+int Thumb::checkForKeyDown() {
+  if (currentPosition >= _smallestAngle + _triggerInterval) {
     _readyForKeyDown = false;
-    _largestAngle = currentPos;
+    _largestAngle = currentPosition;
     _readyForKeyUp = true;
   }
 }
 
-int Thumb::checkForKeyUp(int currentPos) {
-  if (currentPos <= _largestAngle - _triggerInterval) {
-    sendKey(_largestAngle);
-    reset(currentPos);
+int Thumb::checkForKeyUp() {
+  if (currentPosition <= _largestAngle - _triggerInterval) {
+    testKeystroke(*this);
+    resetPos();
   }
 }
 
 void Thumb::sendKey(int largestAngle) {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
-  //the following information should be transmitted as output from a BLE keyboard
-  Serial.println("send key");
+  //the following information should be transmitted as output from a BLE keyboard'
+  _relativePos =  largestAngle;
+  Serial.print("_relativePos ");
+  Serial.println(_relativePos);
   bluetoothle->print("AT+BleKeyboard=");
-  bluetoothle->println(" ");
+  bluetoothle->println(_alphabet[_relativePos]);
+  Serial.println(_alphabet[_relativePos]);
+  resetPos();
 }
 
-void Thumb::reset(int currentPos) {
+void Thumb::resetPos() {
   _readyForKeyUp = false;
-  _largestAngle = currentPos;
-  _smallestAngle = currentPos;
+  _largestAngle = currentPosition;
+  _smallestAngle = currentPosition;
   _readyForKeyDown = true;
 }
 
+int Thumb::currentLargestAngle() {
+  return _largestAngle;
+}
 
