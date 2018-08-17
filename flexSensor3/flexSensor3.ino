@@ -17,7 +17,7 @@ bool keyboardOn = false;
 int ledPin = 13;
 int inputPin = 11;
 int buttonState = 0;
-bool isLeftHand = false;
+bool isLeftHand = true;
 
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
 Adafruit_BluefruitLE_SPI ble(8, 7, 4);
@@ -26,14 +26,14 @@ Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 //Left Pinky
 Finger finger0(0, 4, true, 420, 230, &ble);
 //Left Ring
-Finger finger1(1, 3, true, 590, 460, &ble);
+Finger finger1(1, 3, true, 530, 400, &ble);
 //Left Middle
-Finger finger2(2, 2, true, 680, 595, &ble);
+Finger finger2(2, 2, true, 680, 585, &ble);
 //Left Index
-Finger finger3(3, 1, true, 610, 520, &ble);
+Finger finger3(3, 1, true, 660, 555, &ble);
 
 //Left Thumb
-Thumb thumb1(0, true, 515, 540, &ble);
+Thumb thumb1(0, true, 490, 527, &ble);
 
 // Right hand
 //Right Index
@@ -41,7 +41,7 @@ Finger finger4(4, 3, false, 625, 535, &ble);
 //Right Middle
 Finger finger5(5, 2, false, 590, 460, &ble);
 //Right Ring
-Finger finger6(6, 1, false, 595, 495, &ble);
+Finger finger6(6, 1, false, 595, 470, &ble);
 //Right Pinky
 Finger finger7(7, 0, false, 610, 520, &ble);
 
@@ -130,16 +130,16 @@ void loop() {
       finger0.onLoop();
 
       //Left Ring
-      //finger1.onLoop();
+      finger1.onLoop();
 
       //Left Middle
-      //finger2.onLoop();
+      finger2.onLoop();
 
       //Left Index
-      //finger3.onLoop();
+      finger3.onLoop();
 
       //Left Thumb
-      //thumb1.onLoop();
+      thumb1.onLoop();
     }
     else {
       //Right Index
