@@ -130,16 +130,16 @@ void loop() {
       finger0.onLoop();
 
       //Left Ring
-      finger1.onLoop();
+      //finger1.onLoop();
 
       //Left Middle
-      finger2.onLoop();
+      //finger2.onLoop();
 
       //Left Index
-      finger3.onLoop();
+      //finger3.onLoop();
 
       //Left Thumb
-      thumb1.onLoop();
+      //thumb1.onLoop();
     }
     else {
       //Right Index

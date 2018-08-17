@@ -47,10 +47,10 @@ void Finger::onLoop()
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
 //  Serial.print("current finger: ");
 //  Serial.println(_fingerNumber);
-//  Serial.print("bend: ");
-//  Serial.println(analogRead(_pin));
-//  Serial.print("current position: ");
-//  Serial.println(currentPosition);
+  Serial.print("bend: ");
+  Serial.println(analogRead(_pin));
+  Serial.print("current position: ");
+  Serial.println(currentPosition);
 
 
   setLargestAngle();
