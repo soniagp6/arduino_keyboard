@@ -40,10 +40,6 @@ void Thumb::onLoop()
 {
   // this is if we are writing different characters with each finger
   currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 4);
-//  if (_isLeftHand) {
-//    Serial.print("Left ");
-//  }
-//  Serial.println("thumb");
   Serial.print("bend: ");
   Serial.println(analogRead(_pin));
   Serial.print("current position: ");

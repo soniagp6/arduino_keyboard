@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Finger.h>
+#include <Thumb.h>
 
 #include <SPI.h>
 #include "Adafruit_BLE.h"
@@ -31,15 +32,21 @@ Finger finger2(2, 2, true, 680, 595, &ble);
 //Left Index
 Finger finger3(3, 1, true, 610, 520, &ble);
 
+//Left Thumb
+Thumb thumb1(0, true, 515, 540, &ble);
+
 // Right hand
 //Right Index
-Finger finger4(4, 3, true, 625, 535, &ble);
+Finger finger4(4, 3, false, 625, 535, &ble);
 //Right Middle
-Finger finger5(5, 2, true, 590, 460, &ble);
+Finger finger5(5, 2, false, 590, 460, &ble);
 //Right Ring
-Finger finger6(6, 1, true, 595, 495, &ble);
+Finger finger6(6, 1, false, 595, 495, &ble);
 //Right Pinky
-Finger finger7(7, 0, true, 610, 520, &ble);
+Finger finger7(7, 0, false, 610, 520, &ble);
+
+//Right Thumb
+Thumb thumb2(4, false, 320, 240, &ble);
 
 
 
@@ -130,6 +137,9 @@ void loop() {
 
       //Left Index
       finger3.onLoop();
+
+      //Left Thumb
+      thumb1.onLoop();
     }
     else {
       //Right Index
@@ -139,10 +149,13 @@ void loop() {
       finger5.onLoop();
 
       //Right Ring
-      //finger6.onLoop();
+      finger6.onLoop();
 
       //Right Pinky
-      //finger7.onLoop();
+      finger7.onLoop();
+
+      //Right Thumb
+      thumb2.onLoop();
     }
   }
 }
