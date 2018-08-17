@@ -42,9 +42,16 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
 void Finger::onLoop()
 {
   // this is if we are writing different characters with each finger
-  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, (26/8) * (_fingerNumber - 1), (26/8) * (_fingerNumber));
+  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 6);
   // this is if we are writing all the characters on each finger
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
+//  Serial.print("current finger: ");
+//  Serial.println(_fingerNumber);
+//  Serial.print("bend: ");
+//  Serial.println(analogRead(_pin));
+//  Serial.print("current position: ");
+//  Serial.println(currentPosition);
+
 
   setLargestAngle();
   setSmallestAngle();
@@ -83,9 +90,15 @@ int Finger::checkForKeyUp() {
 
 void Finger::sendKey(int largestAngle) {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
-  //the following information should be transmitted as output from a BLE keyboard
+  //the following information should be transmitted as output from a BLE keyboard'
+  _relativePos =  largestAngle + _fingerNumber*4 - 1;
+  Serial.print("_relativePos ");
+  Serial.println(_relativePos);
   bluetoothle->print("AT+BleKeyboard=");
-  bluetoothle->println(_alphabet[largestAngle - 1]);
+  bluetoothle->println(_alphabet[_relativePos]);
+  Serial.println(_alphabet[_relativePos]);
+  Serial.print("finger Number: ");
+  Serial.println(_fingerNumber);
   resetPos();
 }
 

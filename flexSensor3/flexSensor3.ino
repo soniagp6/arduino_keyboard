@@ -16,31 +16,38 @@ bool keyboardOn = false;
 int ledPin = 13;
 int inputPin = 11;
 int buttonState = 0;
+bool isLeftHand = false;
 
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
 Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 
-//Left Thumb
-Finger finger5(5, 0, true, 300, 230, &ble);
-//Left Index
-Finger finger4(4, 1, true, 610, 520, &ble);
-//Left Middle
-Finger finger3(3, 2, true, 680, 595, &ble);
-//Left Ring
-Finger finger2(2, 3, true, 680, 585, &ble);
+// Left hand
 //Left Pinky
-Finger finger1(1, 4, true, 385, 295, &ble);
+Finger finger0(0, 4, true, 420, 230, &ble);
+//Left Ring
+Finger finger1(1, 3, true, 590, 460, &ble);
+//Left Middle
+Finger finger2(2, 2, true, 680, 595, &ble);
+//Left Index
+Finger finger3(3, 1, true, 610, 520, &ble);
 
-//Finger finger0(4, false, 0, 0, &ble);
-//Finger finger1(3, false, 490, 150, &ble);
-//Finger finger2(2, false, 650, 350, &ble);
-//Finger finger3(1, false, 600, 320, &ble);
-//Finger finger4(0, false, 680, 410, &ble);
+// Right hand
+//Right Index
+Finger finger4(4, 3, true, 625, 535, &ble);
+//Right Middle
+Finger finger5(5, 2, true, 590, 460, &ble);
+//Right Ring
+Finger finger6(6, 1, true, 595, 495, &ble);
+//Right Pinky
+Finger finger7(7, 0, true, 610, 520, &ble);
+
+
 
 #define VERBOSE_MODE  false
 
 void setup(void)
 {
+
   pinMode(inputPin, INPUT);
   pinMode(ledPin, OUTPUT);
   digitalWrite(inputPin, HIGH);
@@ -105,26 +112,38 @@ void setup(void)
 }
 
 void loop() {
-  delay(500); //just here to slow down the output for easier reading
+  delay(100); //just here to slow down the output for easier reading
 
   checkOnButton();
 
   if (keyboardOn==true) {
 
+    if (isLeftHand) {
       //Left Pinky
-      finger1.onLoop();
+      finger0.onLoop();
 
       //Left Ring
-      finger2.onLoop();
+      finger1.onLoop();
 
       //Left Middle
-      finger3.onLoop();
+      finger2.onLoop();
 
       //Left Index
+      finger3.onLoop();
+    }
+    else {
+      //Right Index
       finger4.onLoop();
 
-      //Left Thumb
+      //Right Middle
       finger5.onLoop();
+
+      //Right Ring
+      //finger6.onLoop();
+
+      //Right Pinky
+      //finger7.onLoop();
+    }
   }
 }
 
@@ -143,14 +162,26 @@ void checkOnButton() {
 // finger's distance.
 void testKeystroke(Finger currentFinger) {
   int fingerDist = currentFinger.currentLargestAngle();
+  //currentFinger.sendKey(fingerDist);
   // If distance traveled is greated than other fingers' distance
-  if (fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle()) {
-    currentFinger.sendKey(fingerDist);
-    //finger1.resetPos();
-    //finger2.resetPos();
-    //finger3.resetPos();
-    //finger4.resetPos();
-    //finger5.resetPos();
+
+  if (isLeftHand) {
+    if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle()) {
+      currentFinger.sendKey(fingerDist);
+      finger0.resetPos();
+      finger1.resetPos();
+      finger2.resetPos();
+      finger3.resetPos();
+    }
+  }
+  else {
+    if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle()) {
+      currentFinger.sendKey(fingerDist);
+      finger4.resetPos();
+      finger5.resetPos();
+      finger6.resetPos();
+      finger7.resetPos();
+    }
   }
   // Tell Finger to send keystroke
   // Reset all fingers

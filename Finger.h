@@ -43,6 +43,7 @@ class Finger
     boolean _ranSetup;
     int _lowerLimit;
     int _upperLimit;
+    int _relativePos;
     void error(const __FlashStringHelper*err);
     Adafruit_BluefruitLE_SPI * bluetoothle;
 };
