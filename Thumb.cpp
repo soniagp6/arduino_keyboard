@@ -29,7 +29,7 @@ Thumb::Thumb(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_
   _upperLimit = upperLimit;
   _ranSetup = false;
   bluetoothle = ble;
-  static char const punctuation[] = ".,?'   ";
+  static char const punctuation[] = { '.' , ',' , '\'', '"' , ' ' , '\u003F' , '!' , '\t' , '\b'};
   strcpy( _punctuation, punctuation );
   int currentPosition;
 }

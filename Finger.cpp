@@ -32,7 +32,7 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   _upperLimit = upperLimit;
   _ranSetup = false;
   bluetoothle = ble;
-  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
+  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz.,'";
   strcpy( _alphabet, alphabet );
   int currentPosition;
 }
