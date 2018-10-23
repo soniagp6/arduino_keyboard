@@ -14,6 +14,8 @@
 
 #include "Thumb.h"
 
+extern void testThumbstroke(Thumb currentThumb);
+
 Thumb::Thumb()
 {
 }
@@ -76,7 +78,8 @@ int Thumb::checkForKeyDown() {
 
 int Thumb::checkForKeyUp() {
   if (currentPosition <= _largestAngle - _triggerInterval) {
-    sendKey(_largestAngle);
+    //sendKey(_largestAngle);
+    testThumbstroke(*this);
     resetPos();
   }
 }

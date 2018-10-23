@@ -33,9 +33,9 @@ Finger finger2(2, 2, true, 680, 585, &ble);
 Finger finger3(3, 1, true, 660, 555, &ble);
 
 //Left Thumb
-Thumb thumb1(0, true, 490, 527, &ble);
+Thumb thumb1(0, true, 443, 520, &ble);
 
-// Right hand 
+// Right hand
 //Right Index
 Finger finger4(4, 3, false, 625, 535, &ble);
 //Right Middle
@@ -46,7 +46,7 @@ Finger finger6(6, 1, false, 595, 470, &ble);
 Finger finger7(7, 0, false, 610, 520, &ble);
 
 //Right Thumb
-Thumb thumb2(4, false, 320, 240, &ble);
+Thumb thumb2(4, false, 369, 315, &ble);
 
 
 
@@ -54,7 +54,7 @@ Thumb thumb2(4, false, 320, 240, &ble);
 
 void setup(void)
 {
-  
+
   pinMode(inputPin, INPUT);
   pinMode(ledPin, OUTPUT);
   digitalWrite(inputPin, HIGH);
@@ -80,9 +80,9 @@ void setup(void)
 //  Serial.println(F("Performing a factory reset: "));
     if ( ! ble.factoryReset() ){
 //      error(F("Couldn't factory reset"));
-    } 
+    }
   }
-  
+
   /* Disable command echo from Bluefruit */
   ble.echo(false);
 
@@ -122,19 +122,19 @@ void loop() {
   delay(100); //just here to slow down the output for easier reading
 
   checkOnButton();
- 
+
   if (keyboardOn==true) {
 
     if (isLeftHand) {
       //Left Pinky
-      finger0.onLoop(); 
-  
+      finger0.onLoop();
+
 //      //Left Ring
       finger1.onLoop();
-//  
+//
 //      //Left Middle
       finger2.onLoop();
-//  
+//
 //      //Left Index
       finger3.onLoop();
 //
@@ -143,20 +143,20 @@ void loop() {
     }
     else {
       //Right Index
-      finger4.onLoop(); 
-  
+      finger4.onLoop();
+
       //Right Middle
       finger5.onLoop();
-  
+
       //Right Ring
       finger6.onLoop();
-  
+
       //Right Pinky
       //finger7.onLoop();
 
       //Right Thumb
       thumb2.onLoop();
-    } 
+    }
   }
 }
 
@@ -172,31 +172,31 @@ void checkOnButton() {
 }
 
 // Finger checks to see if the distance it has traveled is greater than another
-// finger's distance. 
+// finger's distance.
 void testKeystroke(Finger currentFinger) {
   int fingerDist = currentFinger.currentLargestAngle();
   //currentFinger.sendKey(fingerDist);
   // If distance traveled is greated than other fingers' distance
 
   if (isLeftHand) {
-    if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle()) {
+    if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
       currentFinger.sendKey(fingerDist);
       finger0.resetPos();
       finger1.resetPos();
       finger2.resetPos();
       finger3.resetPos();
+      thumb1.resetPos();
     }
-    thumb1.resetPos();
   }
   else {
-    if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle()) {
+    if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle() && fingerDist >= thumb2.currentLargestAngle()) {
       currentFinger.sendKey(fingerDist);
       finger4.resetPos();
       finger5.resetPos();
       finger6.resetPos();
       finger7.resetPos();
+      thumb2.resetPos();
     }
-    thumb2.resetPos();
   }
   // Tell Finger to send keystroke
   // Reset all fingers
@@ -204,6 +204,42 @@ void testKeystroke(Finger currentFinger) {
   // If another finger has traveled a greater distance
   // Do nothing
 }
+
+// Finger checks to see if the distance it has traveled is greater than another
+// finger's distance.
+void testThumbstroke(Thumb currentThumb) {
+  int fingerDist = currentThumb.currentLargestAngle();
+  //currentFinger.sendKey(fingerDist);
+  // If distance traveled is greated than other fingers' distance
+
+  if (isLeftHand) {
+    if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
+      currentThumb.sendKey(fingerDist);
+      finger0.resetPos();
+      finger1.resetPos();
+      finger2.resetPos();
+      finger3.resetPos();
+      thumb1.resetPos();
+    }
+  }
+  else {
+    if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle() && fingerDist >= thumb2.currentLargestAngle()) {
+      currentThumb.sendKey(fingerDist);
+      finger4.resetPos();
+      finger5.resetPos();
+      finger6.resetPos();
+      finger7.resetPos();
+      thumb2.resetPos();
+    }
+  }
+  // Tell Finger to send keystroke
+  // Reset all fingers
+
+  // If another finger has traveled a greater distance
+  // Do nothing
+}
+
+
 
 
 
