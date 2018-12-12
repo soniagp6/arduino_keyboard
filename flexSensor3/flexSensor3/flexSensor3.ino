@@ -24,7 +24,7 @@ Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 
 // Left hand
 //Left Pinky
-Finger finger0(0, 4, true, 420, 230, &ble);
+Finger finger0(0, 4, true, 380, 300, &ble);
 //Left Ring
 Finger finger1(1, 3, true, 530, 400, &ble);
 //Left Middle
@@ -223,7 +223,7 @@ void testThumbstroke(Thumb currentThumb) {
     }
   }
   else {
-    if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle() && fingerDist >= thumb2.currentLargestAngle()) {
+    if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle()) {
       currentThumb.sendKey(fingerDist);
       finger4.resetPos();
       finger5.resetPos();

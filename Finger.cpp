@@ -27,7 +27,7 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   _isLeftHand = isLeftHand;
   _readyForKeyUp = false;
   _readyForKeyDown = true;
-  _triggerInterval = 1;
+  _triggerInterval = 3;
   _lowerLimit = lowerLimit;
   _upperLimit = upperLimit;
   _ranSetup = false;
@@ -42,15 +42,17 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
 void Finger::onLoop()
 {
   // this is if we are writing different characters with each finger
-  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 6);
+  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 30);
   // this is if we are writing all the characters on each finger
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
-//  Serial.print("current finger: ");
+//  Serial.print("finger: ");
 //  Serial.println(_fingerNumber);
-  Serial.print("bend: ");
-  Serial.println(analogRead(_pin));
-  Serial.print("current position: ");
-  Serial.println(currentPosition);
+//  Serial.println("bend: ");
+//  Serial.println(analogRead(_pin));
+//  Serial.println("current position: ");
+//  Serial.println(currentPosition);
+//  Serial.print("readykeyup: ");
+//  Serial.println(_readyForKeyUp);
 
 
   setLargestAngle();
@@ -82,7 +84,14 @@ int Finger::checkForKeyDown() {
 }
 
 int Finger::checkForKeyUp() {
+  Serial.print(_fingerNumber);
+  Serial.print("largest Angle: ");
+  Serial.println(_largestAngle);
+  Serial.print("Current Position: ");
+  Serial.println(currentPosition);
   if (currentPosition <= _largestAngle - _triggerInterval) {
+    Serial.print("Test keystroke: ");
+    Serial.println(_fingerNumber);
     testKeystroke(*this);
     resetPos();
   }
@@ -91,14 +100,13 @@ int Finger::checkForKeyUp() {
 void Finger::sendKey(int largestAngle) {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
   //the following information should be transmitted as output from a BLE keyboard'
-  _relativePos =  largestAngle + _fingerNumber*4 - 1;
-  Serial.print("_relativePos ");
-  Serial.println(_relativePos);
+  _relativePos =  map(largestAngle, 0, 30, 0, 5) + _fingerNumber*4 - 1;
+//  Serial.print("sendKey ");
   bluetoothle->print("AT+BleKeyboard=");
   bluetoothle->println(_alphabet[_relativePos]);
-  Serial.println(_alphabet[_relativePos]);
-  Serial.print("finger Number: ");
-  Serial.println(_fingerNumber);
+//  Serial.println(_alphabet[_relativePos]);
+//  Serial.print("finger Number: ");
+//  Serial.println(_fingerNumber);
   resetPos();
 }
 

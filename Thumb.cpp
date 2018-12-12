@@ -31,7 +31,7 @@ Thumb::Thumb(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_
   _upperLimit = upperLimit;
   _ranSetup = false;
   bluetoothle = ble;
-  static char const punctuation[] = { '.' , ',' , '\'', '"' , ' ' , '\u003F' , '!' , '\t' , '\b'};
+  static char const punctuation[] = { '.' , ',' , '\'', '"' , '\b' , ' ' , '!' , '\t' };
   strcpy( _punctuation, punctuation );
   int currentPosition;
 }
@@ -42,10 +42,10 @@ void Thumb::onLoop()
 {
   // this is if we are writing different characters with each finger
   currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 4);
-  Serial.print("bend: ");
-  Serial.println(analogRead(_pin));
-  Serial.print("current position: ");
-  Serial.println(currentPosition);
+//  Serial.print("bend: ");
+//  Serial.println(analogRead(_pin));
+//  Serial.print("current position: ");
+//  Serial.println(currentPosition);
 
 
   setLargestAngle();
