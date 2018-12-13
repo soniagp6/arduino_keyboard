@@ -25,10 +25,11 @@ class Thumb
     int checkForKeyDown();
     int checkForKeyUp();
     int currentPosition;
-    void sendKey(int largestAngle);
-    void resetPos();
+    void sendKey();
+    void resetPos(bool justFired);
     void onLoop();
     int currentLargestAngle();
+    bool isReadyForKeyUp();
 
   private:
     char _punctuation[100];

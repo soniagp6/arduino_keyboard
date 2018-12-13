@@ -45,16 +45,6 @@ void Finger::onLoop()
   currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 30);
   // this is if we are writing all the characters on each finger
   //int currentPosition = map(analogRead(_pin), 640, 370, 0, 25);
-//  Serial.print("finger: ");
-//  Serial.println(_fingerNumber);
-//  Serial.println("bend: ");
-//  Serial.println(analogRead(_pin));
-//  Serial.println("current position: ");
-//  Serial.println(currentPosition);
-//  Serial.print("readykeyup: ");
-//  Serial.println(_readyForKeyUp);
-
-
   setLargestAngle();
   setSmallestAngle();
   if (_readyForKeyDown) {
@@ -84,40 +74,35 @@ int Finger::checkForKeyDown() {
 }
 
 int Finger::checkForKeyUp() {
-  Serial.print(_fingerNumber);
-  Serial.print("largest Angle: ");
-  Serial.println(_largestAngle);
-  Serial.print("Current Position: ");
-  Serial.println(currentPosition);
   if (currentPosition <= _largestAngle - _triggerInterval) {
-    Serial.print("Test keystroke: ");
-    Serial.println(_fingerNumber);
     testKeystroke(*this);
-    resetPos();
   }
 }
 
-void Finger::sendKey(int largestAngle) {
+void Finger::sendKey() {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
   //the following information should be transmitted as output from a BLE keyboard'
-  _relativePos =  map(largestAngle, 0, 30, 0, 5) + _fingerNumber*4 - 1;
-//  Serial.print("sendKey ");
+  _relativePos =  map(_largestAngle, 0, 30, 0, 5) + _fingerNumber*4 - 1;
   bluetoothle->print("AT+BleKeyboard=");
   bluetoothle->println(_alphabet[_relativePos]);
-//  Serial.println(_alphabet[_relativePos]);
-//  Serial.print("finger Number: ");
-//  Serial.println(_fingerNumber);
-  resetPos();
 }
 
-void Finger::resetPos() {
+void Finger::resetPos(bool justFired) {
   _readyForKeyUp = false;
   _largestAngle = currentPosition;
-  _smallestAngle = currentPosition;
+  if (justFired) {
+    _smallestAngle = 0;
+  }
+  else {
+    _smallestAngle = currentPosition;
+  }
   _readyForKeyDown = true;
 }
 
 int Finger::currentLargestAngle() {
-  return _largestAngle;
+  return _largestAngle - _smallestAngle;
 }
 
+bool Finger::isReadyForKeyUp() {
+  return _readyForKeyUp;
+}

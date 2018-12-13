@@ -41,19 +41,16 @@ Thumb::Thumb(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_
 void Thumb::onLoop()
 {
   // this is if we are writing different characters with each finger
-  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 4);
-//  Serial.print("bend: ");
-//  Serial.println(analogRead(_pin));
-//  Serial.print("current position: ");
-//  Serial.println(currentPosition);
-
+  currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 30);
 
   setLargestAngle();
   setSmallestAngle();
   if (_readyForKeyDown) {
+    Serial.println("ready key down");
     checkForKeyDown();
   }
   if (_readyForKeyUp) {
+    Serial.println("ready key up");
     checkForKeyUp();
   }
 }
@@ -79,36 +76,46 @@ int Thumb::checkForKeyDown() {
 int Thumb::checkForKeyUp() {
   if (currentPosition <= _largestAngle - _triggerInterval) {
     //sendKey(_largestAngle);
+    Serial.print("test thumbstroke");
     testThumbstroke(*this);
-    resetPos();
   }
 }
 
-void Thumb::sendKey(int largestAngle) {
+void Thumb::sendKey() {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
   //the following information should be transmitted as output from a BLE keyboard'
   if (_isLeftHand) {
-    _relativePos =  largestAngle;
+    _relativePos =  map(_largestAngle, 0, 30, 0, 5);
   }
   else {
-    _relativePos =  largestAngle + 3;
+    _relativePos =  map(_largestAngle, 0, 30, 0, 5) + 4;
   }
-  Serial.print("_relativePos ");
-  Serial.println(_relativePos);
   bluetoothle->print("AT+BleKeyboard=");
   bluetoothle->println(_punctuation[_relativePos]);
   Serial.println(_punctuation[_relativePos]);
-  resetPos();
+  //resetPos();
 }
 
-void Thumb::resetPos() {
+void Thumb::resetPos(bool justFired) {
   _readyForKeyUp = false;
-  _largestAngle = currentPosition;
-  _smallestAngle = currentPosition;
   _readyForKeyDown = true;
+  _largestAngle = currentPosition;
+  Serial.print("just fired? ");
+  Serial.println(justFired);
+  if (justFired) {
+    _smallestAngle = 0;
+  }
+  else {
+    _smallestAngle = currentPosition;
+  }
 }
 
 int Thumb::currentLargestAngle() {
-  return _largestAngle;
+  return _largestAngle - _smallestAngle;
 }
+
+bool Thumb::isReadyForKeyUp() {
+  return _readyForKeyUp;
+}
+
 

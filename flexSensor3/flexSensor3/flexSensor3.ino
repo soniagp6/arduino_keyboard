@@ -24,7 +24,7 @@ Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 
 // Left hand
 //Left Pinky
-Finger finger0(0, 4, true, 380, 300, &ble);
+Finger finger0(0, 4, true, 380, 270, &ble);
 //Left Ring
 Finger finger1(1, 3, true, 530, 400, &ble);
 //Left Middle
@@ -33,7 +33,7 @@ Finger finger2(2, 2, true, 680, 585, &ble);
 Finger finger3(3, 1, true, 660, 555, &ble);
 
 //Left Thumb
-Thumb thumb1(0, true, 443, 520, &ble);
+Thumb thumb1(0, true, 290, 170, &ble);
 
 // Right hand
 //Right Index
@@ -180,22 +180,24 @@ void testKeystroke(Finger currentFinger) {
 
   if (isLeftHand) {
     if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
-      currentFinger.sendKey(fingerDist);
-      finger0.resetPos();
-      finger1.resetPos();
-      finger2.resetPos();
-      finger3.resetPos();
-      thumb1.resetPos();
+      currentFinger.sendKey();
+      finger0.resetPos(false);
+      finger1.resetPos(false);
+      finger2.resetPos(false);
+      finger3.resetPos(false);
+      thumb1.resetPos(false);
+      currentFinger.resetPos(true);
     }
   }
   else {
     if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle() && fingerDist >= thumb2.currentLargestAngle()) {
-      currentFinger.sendKey(fingerDist);
-      finger4.resetPos();
-      finger5.resetPos();
-      finger6.resetPos();
-      finger7.resetPos();
-      thumb2.resetPos();
+      currentFinger.sendKey();
+      finger4.resetPos(false);
+      finger5.resetPos(false);
+      finger6.resetPos(false);
+      finger7.resetPos(false);
+      thumb2.resetPos(false);
+      currentFinger.resetPos(true);
     }
   }
   // Tell Finger to send keystroke
@@ -213,30 +215,27 @@ void testThumbstroke(Thumb currentThumb) {
   // If distance traveled is greated than other fingers' distance
 
   if (isLeftHand) {
+    Serial.print("fingerDist: ");
+    Serial.println(fingerDist);
     if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
-      currentThumb.sendKey(fingerDist);
-      finger0.resetPos();
-      finger1.resetPos();
-      finger2.resetPos();
-      finger3.resetPos();
-      thumb1.resetPos();
+      currentThumb.sendKey();
+      finger0.resetPos(false);
+      finger1.resetPos(false);
+      finger2.resetPos(false);
+      finger3.resetPos(false);
+      thumb1.resetPos(true);
     }
   }
   else {
     if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle()) {
-      currentThumb.sendKey(fingerDist);
-      finger4.resetPos();
-      finger5.resetPos();
-      finger6.resetPos();
-      finger7.resetPos();
-      thumb2.resetPos();
+      currentThumb.sendKey();
+      finger4.resetPos(false);
+      finger5.resetPos(false);
+      finger6.resetPos(false);
+      finger7.resetPos(false);
+      thumb2.resetPos(true);
     }
   }
-  // Tell Finger to send keystroke
-  // Reset all fingers
-
-  // If another finger has traveled a greater distance
-  // Do nothing
 }
 
 

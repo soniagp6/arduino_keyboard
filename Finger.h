@@ -26,10 +26,11 @@ class Finger
     int checkForKeyUp();
     int _fingerNumber;
     int currentPosition;
-    void sendKey(int largestAngle);
-    void resetPos();
+    void sendKey();
+    void resetPos(bool justFired);
     void onLoop();
     int currentLargestAngle();
+    bool isReadyForKeyUp();
 
   private:
     char _alphabet[100];

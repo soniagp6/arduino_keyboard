@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84964527-628a-474e-9eaa-53d2057bf55a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Finger.cpp" afterPath="$PROJECT_DIR$/Finger.cpp" />
+      <change beforePath="$PROJECT_DIR$/Finger.h" afterPath="$PROJECT_DIR$/Finger.h" />
       <change beforePath="$PROJECT_DIR$/Thumb.cpp" afterPath="$PROJECT_DIR$/Thumb.cpp" />
+      <change beforePath="$PROJECT_DIR$/Thumb.h" afterPath="$PROJECT_DIR$/Thumb.h" />
       <change beforePath="$PROJECT_DIR$/flexSensor3/flexSensor3/flexSensor3.ino" afterPath="$PROJECT_DIR$/flexSensor3/flexSensor3/flexSensor3.ino" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,8 +23,8 @@
       <file leaf-file-name="Finger.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Finger.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="9" lean-forward="false" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+            <state relative-caret-position="435">
+              <caret line="29" column="23" lean-forward="false" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -32,8 +33,8 @@
       <file leaf-file-name="Finger.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Finger.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+            <state relative-caret-position="690">
+              <caret line="46" column="65" lean-forward="false" selection-start-line="46" selection-start-column="65" selection-end-line="46" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -42,8 +43,8 @@
       <file leaf-file-name="Thumb.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Thumb.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="2" selection-end-line="47" selection-end-column="36" />
+            <state relative-caret-position="645">
+              <caret line="43" column="75" lean-forward="false" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -53,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/flexSensor3/flexSensor3/flexSensor3.ino">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1204">
-              <caret line="249" column="1" lean-forward="false" selection-start-line="249" selection-start-column="1" selection-end-line="249" selection-end-column="1" />
+              <caret line="248" column="1" lean-forward="false" selection-start-line="248" selection-start-column="1" selection-end-line="248" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -62,18 +63,8 @@
       <file leaf-file-name="Thumb.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Thumb.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" column="9" lean-forward="false" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="flexSensor3.ino" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/flexSensor3/flexSensor3.ino">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2895">
-              <caret line="193" column="25" lean-forward="false" selection-start-line="193" selection-start-column="25" selection-end-line="193" selection-end-column="25" />
+            <state relative-caret-position="420">
+              <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -83,7 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>bluetoothle</find>
       <find>-&gt;</find>
       <find>fingercontroller</find>
       <find>fingercontroll</find>
@@ -91,7 +81,6 @@
       <find>bluetoot</find>
       <find>_fingernumber</find>
       <find>testkeys</find>
-      <find>checkforkeyup</find>
       <find>setlar</find>
       <find>setsmall</find>
       <find>checkforkeydo</find>
@@ -113,6 +102,8 @@
       <find>_relativePos</find>
       <find>triggerinter</find>
       <find>currentlar</find>
+      <find>checkforkeyup</find>
+      <find>smallestangle</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -130,9 +121,9 @@
         <option value="$PROJECT_DIR$/GloveManager.h" />
         <option value="$PROJECT_DIR$/FingerController.h" />
         <option value="$PROJECT_DIR$/FingerController.cpp" />
-        <option value="$PROJECT_DIR$/Finger.h" />
-        <option value="$PROJECT_DIR$/Thumb.h" />
         <option value="$PROJECT_DIR$/flexSensor3/flexSensor3.ino" />
+        <option value="$PROJECT_DIR$/Thumb.h" />
+        <option value="$PROJECT_DIR$/Finger.h" />
         <option value="$PROJECT_DIR$/Thumb.cpp" />
         <option value="$PROJECT_DIR$/Finger.cpp" />
         <option value="$PROJECT_DIR$/flexSensor3/flexSensor3/flexSensor3.ino" />
@@ -242,12 +233,12 @@
       <workItem from="1537451791062" duration="1538000" />
       <workItem from="1540238725357" duration="5036000" />
       <workItem from="1540403662629" duration="261000" />
-      <workItem from="1544556108217" duration="4072000" />
+      <workItem from="1544556108217" duration="10675000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137987000" />
+    <option name="totallyTimeSpent" value="144590000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="11" y="23" width="2381" height="1328" extended-state="0" />
@@ -588,32 +579,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Thumb.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="9" lean-forward="false" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Thumb.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="2" selection-end-line="47" selection-end-column="36" />
+        <state relative-caret-position="420">
+          <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Finger.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="9" lean-forward="false" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        <state relative-caret-position="435">
+          <caret line="29" column="23" lean-forward="false" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Finger.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="66" column="0" lean-forward="true" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+        <state relative-caret-position="690">
+          <caret line="46" column="65" lean-forward="false" selection-start-line="46" selection-start-column="65" selection-end-line="46" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Thumb.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="75" lean-forward="false" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
           <folding />
         </state>
       </provider>
@@ -621,7 +612,7 @@
     <entry file="file://$PROJECT_DIR$/flexSensor3/flexSensor3/flexSensor3.ino">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1204">
-          <caret line="249" column="1" lean-forward="false" selection-start-line="249" selection-start-column="1" selection-end-line="249" selection-end-column="1" />
+          <caret line="248" column="1" lean-forward="false" selection-start-line="248" selection-start-column="1" selection-end-line="248" selection-end-column="1" />
           <folding />
         </state>
       </provider>
