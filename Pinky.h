@@ -1,10 +1,10 @@
 /*
-  Finger.h - Library for sending keystrokes based on input from glove.
+  Pinky.h - Library for sending keystrokes based on input from glove.
   Created by Sonia Putzel, Jan 10, 2017.
 */
 
-#ifndef Finger_h
-#define Finger_h
+#ifndef Pinky_h
+#define Pinky_h
 
 #include "Arduino.h"
 
@@ -15,26 +15,21 @@
 #include "Adafruit_BluefruitLE_SPI.h"
 #include "Adafruit_BluefruitLE_UART.h"
 
-class Finger
+class Pinky
 {
   public:
-    Finger ();
-    Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_BluefruitLE_SPI * ble);
+    Pinky ();
+    Pinky(int pin, bool isLeftHand, int upperLimit, int lowerLimit);
     int setLargestAngle();
     int setSmallestAngle();
     int checkForKeyDown();
     int checkForKeyUp();
-    int _fingerNumber;
+    bool capOff();
     int currentPosition;
-    void sendKey();
-    void resetPos(bool justFired);
     void onLoop();
-    int currentLargestAngle();
-    bool isReadyForKeyUp();
+    bool isCapOn();
 
   private:
-    char _alphabet[100];
-    char _upperAlphabet[100];
     int _pin;
     int _largestAngle;
     int _smallestAngle;
@@ -45,9 +40,7 @@ class Finger
     boolean _ranSetup;
     int _lowerLimit;
     int _upperLimit;
-    int _relativePos;
-    void error(const __FlashStringHelper*err);
-    Adafruit_BluefruitLE_SPI * bluetoothle;
+    boolean _capOn;
 };
 
 #endif

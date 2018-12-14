@@ -46,11 +46,9 @@ void Thumb::onLoop()
   setLargestAngle();
   setSmallestAngle();
   if (_readyForKeyDown) {
-    Serial.println("ready key down");
     checkForKeyDown();
   }
   if (_readyForKeyUp) {
-    Serial.println("ready key up");
     checkForKeyUp();
   }
 }
