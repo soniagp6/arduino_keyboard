@@ -24,7 +24,7 @@ Pinky::Pinky(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
   _isLeftHand = isLeftHand;
   _readyForKeyUp = false;
   _readyForKeyDown = true;
-  _triggerInterval = 1;
+  _triggerInterval = 3;
   _lowerLimit = lowerLimit;
   _upperLimit = upperLimit;
   _ranSetup = false;
@@ -34,19 +34,15 @@ Pinky::Pinky(int pin, bool isLeftHand, int upperLimit, int lowerLimit)
 
 void Pinky::onLoop()
 {
-  Serial.print("cap on: ");
-  Serial.println(_capOn);
   // this is if we are writing different characters with each finger
   currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 4);
 
   setLargestAngle();
   setSmallestAngle();
   if (_readyForKeyDown) {
-    Serial.println("ready key down");
     checkForKeyDown();
   }
   if (_readyForKeyUp) {
-    Serial.println("ready key up");
     checkForKeyUp();
   }
 }
@@ -77,6 +73,8 @@ int Pinky::checkForKeyUp() {
 
 bool Pinky::capOff() {
   _capOn = false;
+  _readyForKeyUp = false;
+  _readyForKeyDown = true;
 }
 
 bool Pinky::isCapOn() {

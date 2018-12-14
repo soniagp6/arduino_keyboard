@@ -26,7 +26,7 @@ Thumb::Thumb(int pin, bool isLeftHand, int upperLimit, int lowerLimit, Adafruit_
   _isLeftHand = isLeftHand;
   _readyForKeyUp = false;
   _readyForKeyDown = true;
-  _triggerInterval = 1;
+  _triggerInterval = 3;
   _lowerLimit = lowerLimit;
   _upperLimit = upperLimit;
   _ranSetup = false;
@@ -42,9 +42,12 @@ void Thumb::onLoop()
 {
   // this is if we are writing different characters with each finger
   currentPosition = map(analogRead(_pin), _upperLimit, _lowerLimit, 0, 30);
-
   setLargestAngle();
   setSmallestAngle();
+  Serial.print("readyForDown: ");
+  Serial.println(_readyForKeyDown);
+  Serial.print("readyForUp: ");
+  Serial.println(_readyForKeyUp);
   if (_readyForKeyDown) {
     checkForKeyDown();
   }
@@ -56,11 +59,15 @@ void Thumb::onLoop()
 int Thumb::setLargestAngle()
 {
   _largestAngle = (currentPosition >= _largestAngle) ? currentPosition : _largestAngle;
+  Serial.print("LargestAngle ");
+  Serial.println(_largestAngle);
 }
 
 int Thumb::setSmallestAngle()
 {
   _smallestAngle = (currentPosition <= _smallestAngle) ? currentPosition : _smallestAngle;
+  Serial.print("SmallestAngle ");
+  Serial.println(_smallestAngle);
 }
 
 int Thumb::checkForKeyDown() {
@@ -73,8 +80,6 @@ int Thumb::checkForKeyDown() {
 
 int Thumb::checkForKeyUp() {
   if (currentPosition <= _largestAngle - _triggerInterval) {
-    //sendKey(_largestAngle);
-    Serial.print("test thumbstroke");
     testThumbstroke(*this);
   }
 }
@@ -95,17 +100,17 @@ void Thumb::sendKey() {
 }
 
 void Thumb::resetPos(bool justFired) {
-  _readyForKeyUp = false;
-  _readyForKeyDown = true;
-  _largestAngle = currentPosition;
-  Serial.print("just fired? ");
+  Serial.print("resetPosThumb, just fired? ");
   Serial.println(justFired);
+  _readyForKeyUp = false;
+  _largestAngle = currentPosition;
   if (justFired) {
-    _smallestAngle = 0;
+    _smallestAngle = currentPosition;
   }
   else {
     _smallestAngle = currentPosition;
   }
+  _readyForKeyDown = true;
 }
 
 int Thumb::currentLargestAngle() {

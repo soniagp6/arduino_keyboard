@@ -26,7 +26,7 @@ class Finger
     int checkForKeyUp();
     int _fingerNumber;
     int currentPosition;
-    void sendKey();
+    void sendKey(bool isCapOn);
     void resetPos(bool justFired);
     void onLoop();
     int currentLargestAngle();
@@ -34,7 +34,6 @@ class Finger
 
   private:
     char _alphabet[100];
-    char _upperAlphabet[100];
     int _pin;
     int _largestAngle;
     int _smallestAngle;

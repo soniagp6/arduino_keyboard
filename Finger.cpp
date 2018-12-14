@@ -34,7 +34,6 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   bluetoothle = ble;
   static char const alphabet[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   strcpy( _alphabet, alphabet );
-  strcpy( _upperAlphabet, uppercaseAlphabet );
   int currentPosition;
 }
 
@@ -80,12 +79,12 @@ int Finger::checkForKeyUp() {
   }
 }
 
-void Finger::sendKey() {
+void Finger::sendKey(bool isCapOn) {
   //This line doesn't actually print 'AT+BleKeyboard=' - it tells the firmware in the nRF51 module that
   //the following information should be transmitted as output from a BLE keyboard'
-  _relativePos =  map(_largestAngle, 0, 30, 0, 5) + _fingerNumber*4 - 1;
+  _relativePos =  map(_largestAngle, 0, 30, 0, 5) + (_fingerNumber - 1)*4 - 1;
   bluetoothle->print("AT+BleKeyboard=");
-  if (true) {
+  if (isCapOn) {
     bluetoothle->println(_alphabet[_relativePos + 26]);
   }
   else {

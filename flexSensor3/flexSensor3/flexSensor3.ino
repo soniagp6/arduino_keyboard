@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Finger.h>
 #include <Thumb.h>
+#include <Pinky.h>
 
 #include <SPI.h>
 #include "Adafruit_BLE.h"
@@ -24,7 +25,7 @@ Adafruit_BluefruitLE_SPI ble(8, 7, 4);
 
 // Left hand
 //Left Pinky
-Finger finger0(0, 4, true, 380, 270, &ble);
+Pinky pinky0(4, true, 380, 270);
 //Left Ring
 Finger finger1(1, 3, true, 530, 400, &ble);
 //Left Middle
@@ -33,7 +34,7 @@ Finger finger2(2, 2, true, 680, 585, &ble);
 Finger finger3(3, 1, true, 660, 555, &ble);
 
 //Left Thumb
-Thumb thumb1(0, true, 290, 170, &ble);
+Thumb thumb1(0, true, 320, 220, &ble);
 
 // Right hand
 //Right Index
@@ -127,7 +128,7 @@ void loop() {
 
     if (isLeftHand) {
       //Left Pinky
-      finger0.onLoop();
+      pinky0.onLoop();
 
 //      //Left Ring
       finger1.onLoop();
@@ -179,9 +180,9 @@ void testKeystroke(Finger currentFinger) {
   // If distance traveled is greated than other fingers' distance
 
   if (isLeftHand) {
-    if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
-      currentFinger.sendKey();
-      finger0.resetPos(false);
+    if (fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
+      currentFinger.sendKey(pinky0.isCapOn());
+      pinky0.capOff();
       finger1.resetPos(false);
       finger2.resetPos(false);
       finger3.resetPos(false);
@@ -191,7 +192,8 @@ void testKeystroke(Finger currentFinger) {
   }
   else {
     if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle() && fingerDist >= thumb2.currentLargestAngle()) {
-      currentFinger.sendKey();
+      currentFinger.sendKey(pinky0.isCapOn());
+      pinky0.capOff();
       finger4.resetPos(false);
       finger5.resetPos(false);
       finger6.resetPos(false);
@@ -215,11 +217,9 @@ void testThumbstroke(Thumb currentThumb) {
   // If distance traveled is greated than other fingers' distance
 
   if (isLeftHand) {
-    Serial.print("fingerDist: ");
-    Serial.println(fingerDist);
-    if (fingerDist >= finger0.currentLargestAngle() && fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
+    if (fingerDist >= finger1.currentLargestAngle() && fingerDist >= finger2.currentLargestAngle() && fingerDist >= finger3.currentLargestAngle() && fingerDist >= thumb1.currentLargestAngle()) {
       currentThumb.sendKey();
-      finger0.resetPos(false);
+      pinky0.capOff();
       finger1.resetPos(false);
       finger2.resetPos(false);
       finger3.resetPos(false);
@@ -229,6 +229,7 @@ void testThumbstroke(Thumb currentThumb) {
   else {
     if (fingerDist >= finger4.currentLargestAngle() && fingerDist >= finger5.currentLargestAngle() && fingerDist >= finger6.currentLargestAngle() && fingerDist >= finger7.currentLargestAngle()) {
       currentThumb.sendKey();
+      pinky0.capOff();
       finger4.resetPos(false);
       finger5.resetPos(false);
       finger6.resetPos(false);
