@@ -32,7 +32,7 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   _upperLimit = upperLimit;
   _ranSetup = false;
   bluetoothle = ble;
-  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz.,'";
+  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   strcpy( _alphabet, alphabet );
   int currentPosition;
 }
@@ -84,7 +84,12 @@ void Finger::sendKey() {
   //the following information should be transmitted as output from a BLE keyboard'
   _relativePos =  map(_largestAngle, 0, 30, 0, 5) + _fingerNumber*4 - 1;
   bluetoothle->print("AT+BleKeyboard=");
-  bluetoothle->println(_alphabet[_relativePos]);
+  if (true) {
+    bluetoothle->println(_alphabet[_relativePos + 26]);
+  }
+  else {
+    bluetoothle->println(_alphabet[_relativePos]);
+  }
 }
 
 void Finger::resetPos(bool justFired) {
