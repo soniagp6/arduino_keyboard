@@ -32,8 +32,7 @@ Finger::Finger(int fingerNumber, int pin, bool isLeftHand, int upperLimit, int l
   _upperLimit = upperLimit;
   _ranSetup = false;
   bluetoothle = ble;
-  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyz";
-  static char const uppercaseAlphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  static char const alphabet[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   strcpy( _alphabet, alphabet );
   strcpy( _upperAlphabet, uppercaseAlphabet );
   int currentPosition;
@@ -87,7 +86,7 @@ void Finger::sendKey() {
   _relativePos =  map(_largestAngle, 0, 30, 0, 5) + _fingerNumber*4 - 1;
   bluetoothle->print("AT+BleKeyboard=");
   if (true) {
-    bluetoothle->println(_upperAlphabet[_relativePos]);
+    bluetoothle->println(_alphabet[_relativePos + 26]);
   }
   else {
     bluetoothle->println(_alphabet[_relativePos]);
